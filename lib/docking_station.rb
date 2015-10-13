@@ -1,3 +1,7 @@
-Class DockingStation
+class DockingStation
 
-End
+def release_bike
+  true
+end
+
+end
