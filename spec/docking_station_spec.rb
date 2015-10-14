@@ -5,17 +5,28 @@ describe DockingStation do
   it  {is_expected.to respond_to :release_bike}
 
   it 'gets a bike' do
-    expect(subject.release_bike).to be_instance_of Bike
+    bike = Bike.new
+    subject.dock(bike)
+    expect(subject.release_bike).to eq bike
   end
 
-  it 'expects bike to be working' do
-    docking_station = subject
-    bike = docking_station.release_bike
-    expect(bike.working?).to eq true
-    #expect(subject.release_bike.working?).to eq(true)
+it "raise an error when trying to take out a bike" do
+  expect{ subject.release_bike }.to raise_error "No bikes available"
   end
 
-it { is_expected.to respond_to(:dock).with(1).argument }
-it  {is_expected.to respond_to :bike}
+
+it {is_expected.to respond_to(:release_bike) }
+
+it "test if bike works" do
+  bike = Bike.new
+  expect(bike).to be_working
+end
+
+it {is_expected.to respond_to(:dock).with(1).argument }
+
+it "be able to dock a bike" do
+  bike = Bike.new
+  expect(subject.dock(bike)).to eq bike
+end
 
 end
