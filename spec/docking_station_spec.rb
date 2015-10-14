@@ -8,6 +8,8 @@ describe DockingStation do
     bike = Bike.new
     subject.dock(bike)
     expect(subject.release_bike).to eq bike
+
+
   end
 
 it "raise an error when trying to take out a bike" do
