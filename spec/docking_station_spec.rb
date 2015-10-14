@@ -28,7 +28,9 @@ describe DockingStation do
 
   it "be able to dock a bike" do
     bike = Bike.new
-    expect(subject.dock(bike)).to eq bike
+    bikes = []
+    bikes << bike
+    expect(subject.dock(bike)).to eq bikes
   end
 
   it "raise an error when trying to dock a bike" do

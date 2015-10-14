@@ -16,6 +16,6 @@ class DockingStation
   def dock bike
     fail "No space to dock" if @bikes.count == 20
     @bikes << bike
-    @bikes.last
+    # @bikes.last
   end
 end
