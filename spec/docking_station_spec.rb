@@ -16,9 +16,6 @@ describe DockingStation do
     expect{ subject.release_bike }.to raise_error "No bikes available"
   end
 
-
-  it {is_expected.to respond_to(:release_bike) }
-
   it "test if bike works" do
     bike = Bike.new
     expect(bike).to be_working
@@ -39,6 +36,12 @@ describe DockingStation do
       # subject.dock(bike)
       expect{ subject.dock(bike) }.to raise_error "No space to dock"
   end
-
-
+    describe '#initialize' do
+      it 'initialises with a variable capacity' do
+        expect(DockingStation).to respond_to(:new).with(1).argument
+      end
+      it 'initializes with a default capacity of 20' do
+        expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
+      end
+    end
 end
