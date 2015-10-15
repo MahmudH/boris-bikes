@@ -12,6 +12,7 @@ class DockingStation
   def release_bike
     fail "No bikes available" if empty?
     fail 'No working bikes available' if no_working_bikes?
+    last_bike_working
     @bikes.pop
   end
 
@@ -45,5 +46,10 @@ class DockingStation
 
     def no_working_bikes?
       @bikes.all?{|bike| bike.broken } ? true : false
+    end
+    def last_bike_working
+      while @bikes[-1].broken and not no_working_bikes?
+        @bikes.rotate![-1]
+      end
     end
 end
