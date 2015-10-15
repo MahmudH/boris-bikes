@@ -6,13 +6,13 @@ describe DockingStation do
 
   describe '#release_bike' do
     it 'gets a bike' do
-      #bike = Bike.new
-      subject.dock(Bike.new)
+      #bike = double(:bike)
+      subject.dock double(:bike)
       last_bike = subject.bikes.last
       expect(subject.release_bike).to eq last_bike
     end
     it 'does not release a bike if the bike is broken' do
-      bike = Bike.new
+      bike = double(:bike)
       docking_station = DockingStation.new
       bike.report_broken
       docking_station.dock(bike)
@@ -20,8 +20,8 @@ describe DockingStation do
     end
     it 'it only releases working bikes, even if there are broken ones' do
       docking_station = DockingStation.new
-      2.times { docking_station.dock(Bike.new) }
-      bike = Bike.new
+      2.times { docking_station.dock(double(:bike)) }
+      bike = double(:bike)
       bike.report_broken
       docking_station.dock(bike)
       expect{ 3.times { docking_station.release_bike} }.to raise_error "No working bikes available"
@@ -34,29 +34,29 @@ describe DockingStation do
   end
 
   it "test if a new bike is working" do
-    bike = Bike.new
+    bike = double(:bike)
     expect(bike.working).to eq true
   end
 
   #it {is_expected.to respond_to(:dock).with(1).argument }
 
   it "be able to dock a bike" do
-    bike = Bike.new
+    bike = double(:bike)
     bikes = []
     bikes << bike
     expect(subject.dock(bike)).to eq bikes
   end
 
   it "raise an error when trying to dock a bike and the station is full, at default capacity" do
-      bike = Bike.new
-      DockingStation::DEFAULT_CAPACITY.times { subject.dock Bike.new }
+      bike = double(:bike)
+      DockingStation::DEFAULT_CAPACITY.times { subject.dock double(:bike) }
       # subject.dock(bike)
       expect{ subject.dock(bike) }.to raise_error "No space to dock"
   end
   it "raises an error when trying to dock a bike and the station is full - variable capacity" do
-      bike = Bike.new
+      bike = double(:bike)
       docking_station = DockingStation.new(30)
-      30.times { docking_station.dock Bike.new }
+      30.times { docking_station.dock double(:bike) }
       expect{ docking_station.dock(bike) }.to raise_error "No space to dock"
   end
     describe '#initialize' do
@@ -70,7 +70,7 @@ describe DockingStation do
     # describe '#dock' do
     #   # it {is_expected.to respond_to(:dock).with(1).argument }
     #   it 'allows a user to report a broken bike when docking' do
-    #     bike = Bike.new
+    #     bike = double(:bike)
     #     expect(subject.dock(bike).last.working).to eq false
     #   end
     # end
