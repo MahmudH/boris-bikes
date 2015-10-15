@@ -4,11 +4,20 @@ describe DockingStation do
 
   it  {is_expected.to respond_to :release_bike}
 
-  it 'gets a bike' do
-    #bike = Bike.new
-    subject.dock(Bike.new)
-    last_bike = subject.bikes.last
-    expect(subject.release_bike).to eq last_bike
+  describe '#release_bike' do
+    it 'gets a bike' do
+      #bike = Bike.new
+      subject.dock(Bike.new)
+      last_bike = subject.bikes.last
+      expect(subject.release_bike).to eq last_bike
+    end
+    it 'does not release a bike if the bike is broken' do
+      bike = Bike.new
+      docking_station = DockingStation.new
+      bike.report_broken
+      docking_station.dock(bike)
+      expect{ docking_station.release_bike }.to raise_error "No working bikes available"
+    end
   end
 
   it "raise an error when trying to take out a bike if it's empty" do
@@ -16,12 +25,12 @@ describe DockingStation do
     expect{ subject.release_bike }.to raise_error "No bikes available"
   end
 
-  it "test if bike works" do
+  it "test if a new bike is working" do
     bike = Bike.new
-    expect(bike).to be_working
+    expect(bike.working).to eq true
   end
 
-  it {is_expected.to respond_to(:dock).with(1).argument }
+  #it {is_expected.to respond_to(:dock).with(1).argument }
 
   it "be able to dock a bike" do
     bike = Bike.new
@@ -50,4 +59,11 @@ describe DockingStation do
         expect(subject.capacity).to eq DockingStation::DEFAULT_CAPACITY
       end
     end
+    # describe '#dock' do
+    #   # it {is_expected.to respond_to(:dock).with(1).argument }
+    #   it 'allows a user to report a broken bike when docking' do
+    #     bike = Bike.new
+    #     expect(subject.dock(bike).last.working).to eq false
+    #   end
+    # end
 end

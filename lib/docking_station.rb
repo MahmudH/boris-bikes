@@ -11,6 +11,7 @@ class DockingStation
 
   def release_bike
     fail "No bikes available" if empty?
+    fail 'No working bikes available' if no_working_bikes?
     @bikes.pop
   end
 
@@ -19,6 +20,19 @@ class DockingStation
     @bikes << bike
     # @bikes.last
   end
+
+  # def dock bike, condition=true
+  #   fail "No space to dock" if full?
+  #   if condition == :broken
+  #     broken bike
+  #   end
+  #   @bikes << bike
+  #   # @bikes.last
+  # end
+
+  # def broken bike
+  #   bike.working =false
+  # end
 
   private
 
@@ -29,5 +43,7 @@ class DockingStation
       @bikes.empty? ? true : false
     end
 
-
+    def no_working_bikes?
+      @bikes.all?{|bike| bike.broken } ? true : false
+    end
 end
