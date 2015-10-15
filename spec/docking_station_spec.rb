@@ -11,7 +11,7 @@ describe DockingStation do
     expect(subject.release_bike).to eq last_bike
   end
 
-  it "raise an error when trying to take out a bike" do
+  it "raise an error when trying to take out a bike if it's empty" do
 
     expect{ subject.release_bike }.to raise_error "No bikes available"
   end
@@ -30,11 +30,17 @@ describe DockingStation do
     expect(subject.dock(bike)).to eq bikes
   end
 
-  it "raise an error when trying to dock a bike" do
+  it "raise an error when trying to dock a bike and the station is full, at default capacity" do
       bike = Bike.new
       DockingStation::DEFAULT_CAPACITY.times { subject.dock Bike.new }
       # subject.dock(bike)
       expect{ subject.dock(bike) }.to raise_error "No space to dock"
+  end
+  it "raises an error when trying to dock a bike and the station is full - variable capacity" do
+      bike = Bike.new
+      docking_station = DockingStation.new(30)
+      30.times { docking_station.dock Bike.new }
+      expect{ docking_station.dock(bike) }.to raise_error "No space to dock"
   end
     describe '#initialize' do
       it 'initialises with a variable capacity' do
